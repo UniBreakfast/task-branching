@@ -1,0 +1,142 @@
+{
+  "tasks": [
+    {
+      "name": "Create a branching form with multiple tasks to select from",
+      "description": "Web page with a form giving the user a choice of tasks to complete. Upon selection, the user is taken to a new page with the task they selected and a form with the next set of choices of subtasks to complete or requirements to follow. This continues until the user has reached the end of the form. At the end of the form, the user is given a summary of the choices they made.",
+      "subtasks": []
+    }
+  ],
+  "requirements": [
+    {
+      "framework usage": [
+        "Vanilla JS",
+        "React",
+        "Vue",
+        "Angular",
+        "Svelte"
+      ],
+      "paradigms": [
+        "Soft Functional",
+        "Hard Functional",
+        "Object-based OOP",
+        "Prototypal OOP",
+        "Class-based OOP",
+        "Soft Procedural",
+        "Hard Procedural"
+      ],
+      "special approach": [
+        "Finite State Machines",
+        "Global State"
+      ],
+      "files": [
+        "one file",
+        "minimal number of files",
+        "multiple files",
+        "maximum number of files"
+      ],
+      "libraries": [
+        "no libraries",
+        "minimal number of libraries",
+        "multiple libraries",
+        "maximum number of libraries"
+      ],
+      "modules": [
+        "no modules",
+        "self-made modules",
+        "third-party modules",
+        "any modules"
+      ],
+      "styling": [
+        "no styling",
+        "minimal styling",
+        "normal styles",
+        "serious styling"
+      ],
+      "styling approach": [
+        "inline styles",
+        "embedded styles",
+        "external styles",
+        "CSS in JS",
+        "CSS frameworks"
+      ],
+      "styling language": [
+        "CSS",
+        "SASS",
+        "LESS",
+        "Stylus"
+      ],
+      "styling methodology": [
+        "no methodology",
+        "BEM"
+      ],
+      "styling framework": [
+        "no framework",
+        "Bootstrap",
+        "Material UI",
+        "Tailwind CSS",
+        "other framework"
+      ],
+      "testing": [
+        "no testing",
+        "minimal testing",
+        "multiple tests",
+        "full testing"
+      ],
+      "documentation": [
+        "no documentation",
+        "minimal documentation",
+        "extensive documentation",
+        "full documentation"
+      ],
+      "asynchronous code": [
+        "callbacks",
+        "promises",
+        "async/await",
+        "observables",
+        "event driven"
+      ],
+      "data storage": [
+        "no data storage",
+        "local storage",
+        "cookies",
+        "indexedDB",
+        "manual save to file",
+        "server files",
+        "server database",
+        "serverless database",
+        "server-mediated cloud database"
+      ],
+      "pages": [
+        "single page",
+        "multiple pages"
+      ],
+      "adaptive design": [
+        "no adaptive design",
+        "minimal adaptive design",
+        "rich adaptive design",
+        "responsive design"
+      ],
+      "target devices": [
+        "desktop first",
+        "mobile first"
+      ],
+      "languages": [
+        "single language",
+        "multiple languages"
+      ],
+      "data server": [
+        "no data server",
+        "API server",
+        "web socket server",
+        "API and web socket server"
+      ],
+      "database": [
+        "no database",
+        "MySQL",
+        "PostgreSQL",
+        "MongoDB",
+        "Firebase"
+      ]
+    }
+  ]
+}
