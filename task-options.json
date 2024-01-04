@@ -3,7 +3,120 @@
     {
       "name": "Create a branching form with multiple tasks to select from",
       "description": "Web page with a form giving the user a choice of tasks to complete. Upon selection, the user is taken to a new page with the task they selected and a form with the next set of choices of subtasks to complete or requirements to follow. This continues until the user has reached the end of the form. At the end of the form, the user is given a summary of the choices they made.",
-      "subtasks": []
+      "subtasks": [
+        "progress indicator",
+        "list selected options below",
+        "allow going back to previous steps",
+        "skippable steps",
+        "randomized steps",
+        "randomized options",
+        "save and load",
+        "build completion checklist",
+      ]
+    },
+    {
+      "name": "Create a counter with increment and decrement buttons and a display",
+      "description": "Web page with a counter that can be incremented and decremented by clicking on buttons. The counter value is displayed on the page.",
+      "subtasks": [
+        "customizable increment and decrement values",
+        "customizable initial value",
+        "customizable minimum and maximum values",
+        "multiple separate counters",
+        "multiple connected counters",
+        "dispatching events on value change",
+        "hold key step modifiers",
+        "holding increment and decrement buttons"
+      ]
+    },
+    {
+      "name": "create a classic snake game",
+      "description": "Web page with a classic snake game. The snake moves around the screen and grows when it eats food. The game ends when the snake hits the wall or itself.",
+      "subtasks": [
+        "multiple difficulties",
+        "colors",
+        "score",
+        "high score",
+        "pause",
+        "restart",
+        "music",
+        "sound effects",
+        "custom snake",
+        "custom food",
+        "replays",
+        "save and load",
+        "multiple snakes",
+        "multiple foods",
+        "jumping",
+        "border wrapping",
+        "objstacles",
+        "walls",
+        "portals",
+        "tactical mode (slow motion)",
+        "strategic mode (turn based)",
+        "time limit",
+        "stats",
+        "rewind",
+        "AI snake"
+      ]
+    },
+    {
+      "name": "create a classic tetris game",
+      "description": "Web page with a classic tetris game. Blocks fall from the top of the screen and the player can move and rotate them. The game ends when the blocks reach the top of the screen.",
+      "subtasks": [
+        "multiple difficulties",
+        "colors",
+        "score",
+        "high score",
+        "pause",
+        "restart",
+        "music",
+        "sound effects",
+        "custom blocks",
+        "replays",
+        "save and load",
+        "stats",
+        "AI",
+        "rewind"
+      ]
+    },
+    {
+      "name": "TODO list",
+      "description": "Web page with a TODO list. The user can add items to the list. Items can be marked as completed.",
+      "subtasks": [
+        "ability to check/uncheck TODO item",
+        "ability to edit TODO item",
+        "ability to delete TODO item",
+        "selectable items",
+        "delete selected items",
+        "delete completed items",
+        "delete all items",
+        "multiple lists",
+        "multiple users",
+        "multiple lists per user",
+        "multiple users per list",
+        "date assotiation (due date, creation date, completion date)",
+        "history of changes",
+        "undo / redo",
+        "search / filter",
+        "save and load",
+        "importance",
+        "sorting by date",
+        "sorting by name",
+        "sorting by completion",
+        "sorting by importance",
+        "date view",
+        "week view",
+        "month view",
+        "year view",
+        "custom views",
+        "calendar",
+        "reminders",
+        "notifications",
+        "sharing",
+        "categories",
+        "tags",
+        "subtasks"
+      ]
     }
   ],
   "requirements": [
@@ -109,6 +222,12 @@
       "pages": [
         "single page",
         "multiple pages"
+      ],
+      "rendering": [
+        "static site generation",
+        "server-side rendering",
+        "client-side rendering",
+        "both sides rendering"
       ],
       "adaptive design": [
         "no adaptive design",
