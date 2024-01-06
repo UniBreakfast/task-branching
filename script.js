@@ -4,7 +4,8 @@ async function main() {
   const taskOptions = await getTaskOptions();
   const taskNames = getTaskNames(taskOptions);
   
-  
+  console.log(taskOptions);
+  console.log(taskNames);
 }
 
 function getTaskOptions() {
