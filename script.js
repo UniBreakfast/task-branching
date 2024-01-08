@@ -146,7 +146,7 @@ function showNextQuestion(requirementName) {
     .map(makeRequirementOption(requirementName));
   const i = Object.keys(taskOptions.requirements).indexOf(requirementName);
   const nextRequirementName = Object.keys(taskOptions.requirements)[i + 1];
-  
+
   nextBtn.hidden = !nextRequirementName;
 
   fieldSet.replaceChildren(...requirementOptions);
@@ -189,20 +189,21 @@ function handleNextAnswer(event) {
     } else {
       showSecondQuestion(task.subtasks);
     }
-  } else if (event.submitter === nextBtn) {
+  } else {
     result.requirements[requirementName] = requirement;
 
-    const nextRequirementName = Object.keys(taskOptions.requirements)[i + 1];
+    if (event.submitter === nextBtn) {
+      const nextRequirementName = Object.keys(taskOptions.requirements)[i + 1];
 
-    if (nextRequirementName) {
-      showNextQuestion(nextRequirementName);
+      if (nextRequirementName) {
+        showNextQuestion(nextRequirementName);
+      } else {
+        showResult();
+      }
     } else {
       showResult();
     }
-  } else {
-    showResult();
   }
-
 }
 
 function showResult() {
@@ -223,10 +224,11 @@ function showResult() {
 
 function makeListItem(subtask) {
   const li = document.createElement('li');
+  const label = document.createElement('label');
   const input = document.createElement('input');
 
   input.type = 'checkbox';
-  li.append(input, subtask);
+  li.appendChild(label).append(input, subtask);
 
   return li;
 }
@@ -237,7 +239,7 @@ function makeDefinitionItems([requirementName, requirement]) {
   const dt = document.createElement('dt');
   const dd = document.createElement('dd');
 
-  dt.append(requirementName);
+  dt.append(requirementName + ':');
   dd.append(requirement);
 
   return [dt, dd];

@@ -127,7 +127,7 @@
       "Angular",
       "Svelte"
     ],
-    "paradigms": [
+    "paradigm": [
       "Soft Functional",
       "Hard Functional",
       "Object-based OOP",
@@ -146,13 +146,13 @@
       "multiple files",
       "maximum number of files"
     ],
-    "libraries": [
+    "library usage": [
       "no libraries",
       "minimal number of libraries",
       "multiple libraries",
       "maximum number of libraries"
     ],
-    "modules": [
+    "module usage": [
       "no modules",
       "self-made modules",
       "third-party modules",
@@ -218,7 +218,7 @@
       "serverless database",
       "server-mediated cloud database"
     ],
-    "pages": [
+    "page": [
       "single page",
       "multiple pages"
     ],
@@ -238,7 +238,7 @@
       "desktop first",
       "mobile first"
     ],
-    "languages": [
+    "language": [
       "single language",
       "multiple languages"
     ],
