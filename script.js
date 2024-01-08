@@ -11,7 +11,7 @@ async function main() {
 }
 
 function getTaskOptions() {
-  return fetch('/task-options.json')
+  return fetch('task-options.json')
     .then(response => response.json());
 }
 
