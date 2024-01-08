@@ -1,4 +1,4 @@
-let taskOptions, task, form, fieldSet, nextBtn;
+let taskOptions, task, form, fieldSet, nextBtn, finishBtn;
 const result = { task: {}, requirements: {} };
 
 main();
@@ -28,8 +28,11 @@ function showForm(taskNames) {
 function prepareForm() {
   form = document.createElement('form');
   nextBtn = document.createElement('button');
-  document.body.appendChild(form)
-    .appendChild(nextBtn).append('Next');
+  finishBtn = document.createElement('button');
+
+  document.body.appendChild(form).append(nextBtn, finishBtn)
+  nextBtn.append('Next');
+  finishBtn.append('Finish');
 }
 
 function showFirstQuestion(taskNames) {
@@ -71,11 +74,15 @@ function handleFirstAnswer(event) {
 
   const { name, description, subtasks } = task;
 
-  result.task = { name, description };
+  result.task = { name, description, subtasks: [] };
 
   form.removeEventListener('submit', handleFirstAnswer);
 
-  showSecondQuestion(subtasks);
+  if (event.submitter === nextBtn) {
+    showSecondQuestion(subtasks);
+  } else {
+    showResult();
+  }
 }
 
 function showSecondQuestion(subtasks) {
@@ -103,11 +110,15 @@ function makeSubtaskOption(subtask) {
 function handleSecondAnswer(event) {
   event.preventDefault();
 
-  result.subtasks = new FormData(form).getAll('subtask');
+  result.task.subtasks = new FormData(form).getAll('subtask');
 
   form.removeEventListener('submit', handleSecondAnswer);
 
-  showNextQuestion(Object.keys(taskOptions.requirements)[0]);
+  if (event.submitter === nextBtn) {
+    showNextQuestion(Object.keys(taskOptions.requirements)[0]);
+  } else {
+    showResult();
+  }
 }
 
 function showNextQuestion(requirementName) {
@@ -143,6 +154,11 @@ function handleNextAnswer(event) {
 
   result.requirements[requirementName] = requirement;
 
+  if (event.submitter === finishBtn) {
+    showResult();
+    return;
+  }
+
   const i = Object.keys(taskOptions.requirements).indexOf(requirementName);
   const nextRequirementName = Object.keys(taskOptions.requirements)[i + 1];
 
@@ -157,7 +173,7 @@ function showResult() {
   const h2 = document.createElement('h2');
   const p = document.createElement('p');
   const ul = document.createElement('ul');
-  const items = result.subtasks.map(makeListItem);
+  const items = result.task.subtasks.map(makeListItem);
   const dl = document.createElement('dl');
   const dItems = Object.entries(result.requirements)
     .flatMap(makeDefinitionItems);
