@@ -187,6 +187,7 @@ function handleNextAnswer(event) {
     if (prevRequirementName) {
       showNextQuestion(prevRequirementName);
     } else {
+      form.removeEventListener('submit', handleNextAnswer);
       showSecondQuestion(task.subtasks);
     }
   } else {
