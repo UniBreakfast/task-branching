@@ -1,4 +1,4 @@
-let taskOptions, task, form, fieldSet, nextBtn, finishBtn;
+let taskOptions, task, form, fieldSet, backBtn, nextBtn, finishBtn;
 const result = { task: {}, requirements: {} };
 
 main();
@@ -27,20 +27,29 @@ function showForm(taskNames) {
 
 function prepareForm() {
   form = document.createElement('form');
+  backBtn = document.createElement('button');
   nextBtn = document.createElement('button');
   finishBtn = document.createElement('button');
 
-  document.body.appendChild(form).append(nextBtn, finishBtn)
+  document.body.appendChild(form)
+    .append(backBtn, nextBtn, finishBtn);
+  backBtn.append('Back');
   nextBtn.append('Next');
   finishBtn.append('Finish');
 }
 
 function showFirstQuestion(taskNames) {
-  fieldSet = document.createElement('fieldset');
+  backBtn.hidden = true;
+
+  fieldSet = fieldSet || document.createElement('fieldset');
   const taskOptions = taskNames.map(makeTaskOption);
 
-  form.prepend(fieldSet);
-  fieldSet.append(...taskOptions);
+  form.append(fieldSet);
+  fieldSet.replaceChildren(...taskOptions);
+
+  if (result.task?.name) {
+    form.querySelector(`input[value="${result.task.name}"]`).checked = true;
+  }
 
   form.addEventListener('submit', handleFirstAnswer);
 }
@@ -74,7 +83,9 @@ function handleFirstAnswer(event) {
 
   const { name, description, subtasks } = task;
 
-  result.task = { name, description, subtasks: [] };
+  if (result.task.name !== name) {
+    result.task = { name, description, subtasks: [] };
+  }
 
   form.removeEventListener('submit', handleFirstAnswer);
 
@@ -88,9 +99,16 @@ function handleFirstAnswer(event) {
 function showSecondQuestion(subtasks) {
   const subtaskOptions = subtasks.map(makeSubtaskOption);
 
+  backBtn.hidden = false;
   fieldSet.replaceChildren(...subtaskOptions);
 
   form.addEventListener('submit', handleSecondAnswer);
+
+  if (result.task.subtasks.length) {
+    result.task.subtasks.forEach(subtask => {
+      form.querySelector(`input[value="${subtask}"]`).checked = true;
+    });
+  }
 }
 
 function makeSubtaskOption(subtask) {
@@ -114,7 +132,9 @@ function handleSecondAnswer(event) {
 
   form.removeEventListener('submit', handleSecondAnswer);
 
-  if (event.submitter === nextBtn) {
+  if (event.submitter === backBtn) {
+    showFirstQuestion(getTaskNames(taskOptions));
+  } else if (event.submitter === nextBtn) {
     showNextQuestion(Object.keys(taskOptions.requirements)[0]);
   } else {
     showResult();
@@ -124,10 +144,18 @@ function handleSecondAnswer(event) {
 function showNextQuestion(requirementName) {
   const requirementOptions = taskOptions.requirements[requirementName]
     .map(makeRequirementOption(requirementName));
+  const i = Object.keys(taskOptions.requirements).indexOf(requirementName);
+  const nextRequirementName = Object.keys(taskOptions.requirements)[i + 1];
+  
+  nextBtn.hidden = !nextRequirementName;
 
   fieldSet.replaceChildren(...requirementOptions);
 
   form.addEventListener('submit', handleNextAnswer);
+
+  if (result.requirements[requirementName]) {
+    form.querySelector(`input[value="${result.requirements[requirementName]}"]`).checked = true;
+  }
 }
 
 function makeRequirementOption(requirementName) {
@@ -149,24 +177,32 @@ function makeRequirementOption(requirementName) {
 function handleNextAnswer(event) {
   event.preventDefault();
 
-  const requirementName = form[1].name;
+  const requirementName = form[form.length - 1].name;
   const requirement = new FormData(form).get(requirementName);
-
-  result.requirements[requirementName] = requirement;
-
-  if (event.submitter === finishBtn) {
-    showResult();
-    return;
-  }
-
   const i = Object.keys(taskOptions.requirements).indexOf(requirementName);
-  const nextRequirementName = Object.keys(taskOptions.requirements)[i + 1];
 
-  if (nextRequirementName) {
-    showNextQuestion(nextRequirementName);
+  if (event.submitter === backBtn) {
+    const prevRequirementName = Object.keys(taskOptions.requirements)[i - 1];
+
+    if (prevRequirementName) {
+      showNextQuestion(prevRequirementName);
+    } else {
+      showSecondQuestion(task.subtasks);
+    }
+  } else if (event.submitter === nextBtn) {
+    result.requirements[requirementName] = requirement;
+
+    const nextRequirementName = Object.keys(taskOptions.requirements)[i + 1];
+
+    if (nextRequirementName) {
+      showNextQuestion(nextRequirementName);
+    } else {
+      showResult();
+    }
   } else {
     showResult();
   }
+
 }
 
 function showResult() {
@@ -177,7 +213,7 @@ function showResult() {
   const dl = document.createElement('dl');
   const dItems = Object.entries(result.requirements)
     .flatMap(makeDefinitionItems);
-  
+
   h2.append(result.task.name);
   p.append(result.task.description);
   ul.append(...items);
@@ -197,7 +233,7 @@ function makeListItem(subtask) {
 
 function makeDefinitionItems([requirementName, requirement]) {
   if (!requirement) return [];
-  
+
   const dt = document.createElement('dt');
   const dd = document.createElement('dd');
 
