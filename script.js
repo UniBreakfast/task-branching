@@ -1,4 +1,4 @@
-let taskOptions, task, form, fieldSet, backBtn, nextBtn, finishBtn;
+let taskOptions, task, form, fieldSet, legend, backBtn, nextBtn, finishBtn;
 const result = { task: {}, requirements: {} };
 
 main();
@@ -30,22 +30,24 @@ function prepareForm() {
   backBtn = document.createElement('button');
   nextBtn = document.createElement('button');
   finishBtn = document.createElement('button');
-
+  fieldSet = document.createElement('fieldset');
+  legend = document.createElement('legend');
+  
   document.body.appendChild(form)
-    .append(backBtn, nextBtn, finishBtn);
+    .append(backBtn, nextBtn, finishBtn, fieldSet);
   backBtn.append('Back');
   nextBtn.append('Next');
   finishBtn.append('Finish');
+  fieldSet.append(legend);
 }
 
 function showFirstQuestion(taskNames) {
   backBtn.hidden = true;
 
-  fieldSet = fieldSet || document.createElement('fieldset');
   const taskOptions = taskNames.map(makeTaskOption);
 
-  form.append(fieldSet);
-  fieldSet.replaceChildren(...taskOptions);
+  legend.replaceChildren('Select a task');
+  fieldSet.replaceChildren(legend, ...taskOptions);
 
   if (result.task?.name) {
     form.querySelector(`input[value="${result.task.name}"]`).checked = true;
@@ -98,9 +100,14 @@ function handleFirstAnswer(event) {
 
 function showSecondQuestion(subtasks) {
   const subtaskOptions = subtasks.map(makeSubtaskOption);
+  const p = document.createElement('p');
+  const b = document.createElement('b');
 
   backBtn.hidden = false;
-  fieldSet.replaceChildren(...subtaskOptions);
+  b.append(result.task.name);
+  p.append(b, ': ', result.task.description);
+  legend.replaceChildren('Select subtasks for your task: ');
+  fieldSet.replaceChildren(legend, p, ...subtaskOptions);
 
   form.addEventListener('submit', handleSecondAnswer);
 
@@ -147,9 +154,10 @@ function showNextQuestion(requirementName) {
   const i = Object.keys(taskOptions.requirements).indexOf(requirementName);
   const nextRequirementName = Object.keys(taskOptions.requirements)[i + 1];
 
+  legend.replaceChildren(requirementName);
   nextBtn.hidden = !nextRequirementName;
 
-  fieldSet.replaceChildren(...requirementOptions);
+  fieldSet.replaceChildren(legend,...requirementOptions);
 
   form.addEventListener('submit', handleNextAnswer);
 
