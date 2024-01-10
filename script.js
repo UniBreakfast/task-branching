@@ -1,10 +1,12 @@
-let taskOptions, task, form, fieldSet, legend, backBtn, nextBtn, finishBtn;
+let taskOptions, task, form, fieldSet, legend, it, backBtn, nextBtn, finishBtn, stepCount;
 const result = { task: {}, requirements: {} };
 
 main();
 
 async function main() {
   taskOptions = await getTaskOptions();
+  stepCount = 2 + Object.keys(taskOptions.requirements).length;
+
   const tasks = getTasks(taskOptions);
 
   showForm(tasks);
@@ -32,13 +34,14 @@ function prepareForm() {
   finishBtn = document.createElement('button');
   fieldSet = document.createElement('fieldset');
   legend = document.createElement('legend');
+  it = document.createElement('i');
   
   document.body.appendChild(form)
     .append(backBtn, nextBtn, finishBtn, fieldSet);
   backBtn.append('Back');
   nextBtn.append('Next');
   finishBtn.append('Finish');
-  fieldSet.append(legend);
+  fieldSet.append(legend, it);
 
   fieldSet.addEventListener('click', e => {
     if (!e.pointerType) return;
@@ -59,7 +62,8 @@ function showFirstQuestion(tasks) {
   const taskOptions = tasks.map(makeTaskOption);
 
   legend.replaceChildren('Select a task');
-  fieldSet.replaceChildren(legend, ...taskOptions);
+  fieldSet.replaceChildren(legend, ...taskOptions, it);
+  it.replaceChildren(`1 / ${stepCount}`)
 
   if (result.task?.name) {
     form.querySelector(`input[value="${result.task.name}"]`).checked = true;
@@ -120,9 +124,10 @@ function showSecondQuestion(subtasks) {
   backBtn.hidden = false;
   b.append(result.task.name);
   p.append(b, ': ', result.task.description);
-  legend.replaceChildren('Select subtasks for your task: ');
-  fieldSet.replaceChildren(legend, p, ul);
+  legend.replaceChildren('Select subtasks for your task');
+  fieldSet.replaceChildren(legend, p, ul, it);
   ul.append(...subtaskOptions);
+  it.replaceChildren(`2 / ${stepCount}`);
 
   form.addEventListener('submit', handleSecondAnswer);
 
@@ -172,7 +177,8 @@ function showNextQuestion(requirementName) {
   legend.replaceChildren(requirementName);
   nextBtn.hidden = !nextRequirementName;
 
-  fieldSet.replaceChildren(legend,...requirementOptions);
+  fieldSet.replaceChildren(legend,...requirementOptions, it);
+  it.replaceChildren(`${i+3} / ${stepCount}`);
 
   form.addEventListener('submit', handleNextAnswer);
 
