@@ -1,0 +1,81 @@
+body {
+  padding: 20px;
+}
+
+form {
+  text-align: center;
+}
+
+fieldset {
+  border-radius: 35px;
+  margin: 20px auto;
+  padding: 30px;
+  width: max-content;
+  max-width: 80vw;
+  background-color: #fe9;
+  box-shadow: 0 0 3px #ca1;
+}
+
+legend {
+  /* border: 1px solid #ca1; */
+  border-radius: 15px;
+  padding: 5px 20px;
+  background-color: #fff3aa;
+  box-shadow: 0 0 3px #ca1;
+}
+
+fieldset p {
+  margin: -10px 0 20px;
+}
+
+button+button:has(+button) {
+  animation: pulse 1s infinite;
+}
+
+h2 {
+  font-size: 22px;
+}
+
+h2 + p {
+  margin: 20px;
+}
+
+h2 ~ ul {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+dl {
+  margin: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px 10%;
+  align-items: center;
+}
+
+dl > * {
+  flex: 1 1 40%;
+}
+
+dt {
+  text-align: right;
+}
+
+dd {
+  text-align: left;
+  font-weight: bold;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

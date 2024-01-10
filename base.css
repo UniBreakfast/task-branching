@@ -1,0 +1,37 @@
+body {
+  font-size: 18px;
+  line-height: 1.2;
+  font-family: 'Exo 2', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  accent-color: #28c;
+}
+
+button {
+  border-radius: 15px;
+  padding: 5px 20px;
+  background-color: #28c;
+  color: #fff;
+  box-shadow: 0 0 3px #adf;
+  display: initial;
+  transition: 1s; 
+  margin: 0 10px; 
+}
+
+button[hidden] {
+  display: initial;
+  visibility: hidden;
+  opacity: 0;
+}
+
+label {
+  display: flex;
+  gap: 20px;
+  border-radius: 15px;
+  padding: 3px 10px;
+  transition: 1s;
+}
+
+label:has(:checked) {
+  background-color: #adf;
+  text-shadow: 0 0 3px #28c;
+  box-shadow: 0 0 3px #28c;
+}
