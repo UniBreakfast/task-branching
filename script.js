@@ -5,9 +5,9 @@ main();
 
 async function main() {
   taskOptions = await getTaskOptions();
-  const taskNames = getTaskNames(taskOptions);
+  const tasks = getTasks(taskOptions);
 
-  showForm(taskNames);
+  showForm(tasks);
 }
 
 function getTaskOptions() {
@@ -15,14 +15,14 @@ function getTaskOptions() {
     .then(response => response.json());
 }
 
-function getTaskNames(taskOptions) {
-  const taskNames = taskOptions.tasks.map(task => task.name);
-  return taskNames;
+function getTasks(taskOptions) {
+  const tasks = taskOptions.tasks.map(task => [task.name, task.description]);
+  return tasks;
 }
 
-function showForm(taskNames) {
+function showForm(tasks) {
   prepareForm();
-  showFirstQuestion(taskNames);
+  showFirstQuestion(tasks);
 }
 
 function prepareForm() {
@@ -53,10 +53,10 @@ function prepareForm() {
   }, true);
 }
 
-function showFirstQuestion(taskNames) {
+function showFirstQuestion(tasks) {
   backBtn.hidden = true;
 
-  const taskOptions = taskNames.map(makeTaskOption);
+  const taskOptions = tasks.map(makeTaskOption);
 
   legend.replaceChildren('Select a task');
   fieldSet.replaceChildren(legend, ...taskOptions);
@@ -68,7 +68,7 @@ function showFirstQuestion(taskNames) {
   form.addEventListener('submit', handleFirstAnswer);
 }
 
-function makeTaskOption(taskName) {
+function makeTaskOption([taskName, taskDescription]) {
   const p = document.createElement('p');
   const label = document.createElement('label');
   const input = document.createElement('input');
@@ -76,6 +76,7 @@ function makeTaskOption(taskName) {
   input.type = 'radio';
   input.name = 'task';
   input.value = taskName;
+  label.title = taskDescription;
 
   p.appendChild(label).append(input, taskName);
 
@@ -112,6 +113,7 @@ function handleFirstAnswer(event) {
 
 function showSecondQuestion(subtasks) {
   const subtaskOptions = subtasks.map(makeSubtaskOption);
+  const ul = document.createElement('ul');
   const p = document.createElement('p');
   const b = document.createElement('b');
 
@@ -119,7 +121,8 @@ function showSecondQuestion(subtasks) {
   b.append(result.task.name);
   p.append(b, ': ', result.task.description);
   legend.replaceChildren('Select subtasks for your task: ');
-  fieldSet.replaceChildren(legend, p, ...subtaskOptions);
+  fieldSet.replaceChildren(legend, p, ul);
+  ul.append(...subtaskOptions);
 
   form.addEventListener('submit', handleSecondAnswer);
 
@@ -131,7 +134,7 @@ function showSecondQuestion(subtasks) {
 }
 
 function makeSubtaskOption(subtask) {
-  const p = document.createElement('p');
+  const li = document.createElement('li');
   const label = document.createElement('label');
   const input = document.createElement('input');
 
@@ -139,9 +142,9 @@ function makeSubtaskOption(subtask) {
   input.name = 'subtask';
   input.value = subtask;
 
-  p.appendChild(label).append(input, subtask);
+  li.appendChild(label).append(input, subtask);
 
-  return p;
+  return li;
 }
 
 function handleSecondAnswer(event) {
@@ -152,7 +155,7 @@ function handleSecondAnswer(event) {
   form.removeEventListener('submit', handleSecondAnswer);
 
   if (event.submitter === backBtn) {
-    showFirstQuestion(getTaskNames(taskOptions));
+    showFirstQuestion(getTasks(taskOptions));
   } else if (event.submitter === nextBtn) {
     showNextQuestion(Object.keys(taskOptions.requirements)[0]);
   } else {

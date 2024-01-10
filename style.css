@@ -41,7 +41,7 @@ h2 + p {
   margin: 20px;
 }
 
-h2 ~ ul {
+ul:has([type="checkbox"]) {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -50,7 +50,7 @@ h2 ~ ul {
   margin: auto;
 }
 
-h2 ~ ul > * {
+li:has([type="checkbox"]) {
   flex: 0 1 47.5%;
 }
 
