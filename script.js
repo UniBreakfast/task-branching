@@ -220,6 +220,7 @@ function showResult() {
   const p = document.createElement('p');
   const ul = document.createElement('ul');
   const items = result.task.subtasks.map(makeListItem);
+  const h4 = document.createElement('h4');
   const dl = document.createElement('dl');
   const dItems = Object.entries(result.requirements)
     .flatMap(makeDefinitionItems);
@@ -227,8 +228,11 @@ function showResult() {
   h2.append(result.task.name);
   p.append(result.task.description);
   ul.append(...items);
+  h4.append(dItems.length ? 'Requirements:' : 'No additional requirements');
   dl.append(...dItems);
-  form.replaceWith(h2, p, ul, dl);
+  form.replaceWith(h2, p, ul, h4, dl);
+
+  prepareToSave();
 }
 
 function makeListItem(subtask) {
@@ -252,4 +256,46 @@ function makeDefinitionItems([requirementName, requirement]) {
   dd.append(requirement);
 
   return [dt, dd];
+}
+
+async function prepareToSave() {
+  const style = document.createElement('style');
+  const cssFiles = await getCssFiles();
+
+  document.head.appendChild(style)
+    .append(...cssFiles);
+
+  [...document.head.children].slice(2, 6)
+    .forEach(el => el.remove())
+
+  onkeydown = e => {
+    if (e.ctrlKey && e.code === 'KeyS') {
+      e.preventDefault();
+      save();
+    }
+  }
+}
+
+function getCssFiles() {
+  return Promise.all([
+    fetch('reset.css').then(response => response.text()),
+    fetch('base.css').then(response => response.text()),
+    fetch('style.css').then(response => response.text()),
+  ]);
+}
+
+function save() {
+  document.querySelectorAll('input')
+  .forEach(input => {
+  
+  const html = document.documentElement.outerHTML;
+  const blob = new Blob([html], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+
+  a.download = `task ${result.task.name}.html`;
+  a.href = url;
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
 }
