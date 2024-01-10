@@ -33,6 +33,7 @@ button+button:has(+button) {
 }
 
 h2 {
+  text-align: center;
   font-size: 22px;
 }
 
@@ -42,12 +43,24 @@ h2 + p {
 
 h2 ~ ul {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px 5%;
+  width: 90%;
+  margin: auto;
+}
+
+h2 ~ ul > * {
+  flex: 0 1 47.5%;
+}
+
+h4 {
+  margin-top: 30px;
+  text-align: center;
 }
 
 dl {
-  margin: 30px;
+  margin: 10px 30px 30px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

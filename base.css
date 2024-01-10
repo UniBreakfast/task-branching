@@ -24,6 +24,7 @@ button[hidden] {
 
 label {
   display: flex;
+  text-align: left;
   gap: 20px;
   border-radius: 15px;
   padding: 3px 10px;
