@@ -39,6 +39,18 @@ function prepareForm() {
   nextBtn.append('Next');
   finishBtn.append('Finish');
   fieldSet.append(legend);
+
+  fieldSet.addEventListener('click', e => {
+    if (!e.pointerType) return;
+
+    const label = e.target.closest('label');
+    const radio = label?.querySelector('input[type="radio"]');
+
+    if (radio?.checked) {
+      radio.checked = false;
+      e.preventDefault();
+    }
+  }, true);
 }
 
 function showFirstQuestion(taskNames) {
@@ -287,6 +299,12 @@ function getCssFiles() {
 function save() {
   document.querySelectorAll('input')
   .forEach(input => {
+    if (input.checked) {
+      input.setAttribute('checked', '');
+    } else {
+      input.removeAttribute('checked');
+    }
+  });
   
   const html = document.documentElement.outerHTML;
   const blob = new Blob([html], { type: 'text/html' });
