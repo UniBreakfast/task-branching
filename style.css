@@ -18,6 +18,7 @@ fieldset {
 
 legend {
   /* border: 1px solid #ca1; */
+  font-size: 20px;
   border-radius: 15px;
   padding: 5px 20px;
   background-color: #fff3aa;
@@ -82,6 +83,7 @@ dl > * {
 }
 
 dt {
+  font-size: 16px;
   text-align: right;
 }
 

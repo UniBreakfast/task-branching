@@ -36,3 +36,7 @@ label:has(:checked) {
   text-shadow: 0 0 3px #28c;
   box-shadow: 0 0 3px #28c;
 }
+
+input[type="radio"] {
+  pointer-events: none;
+}
